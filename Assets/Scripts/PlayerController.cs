@@ -3,17 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /*
-* ÉèÖÃÈËÎï»ù´¡»ù´¡ËÙ¶È¡¢¼ÓËÙºÍÌåÁ¦ÏûºÄ£¨¼ÓËÙÒÆ¶¯ÏûºÄ£¬ÆäËûÇé¿ö»Ø¸´ÌåÁ¦£©
-* ¼ÓËÙ¼üÉèÖÃ
+* è®¾ç½®äººç‰©åŸºç¡€åŸºç¡€é€Ÿåº¦ã€åŠ é€Ÿå’Œä½“åŠ›æ¶ˆè€—ï¼ˆåŠ é€Ÿç§»åŠ¨æ¶ˆè€—ï¼Œå…¶ä»–æƒ…å†µå›å¤ä½“åŠ›ï¼‰
+* åŠ é€Ÿé”®è®¾ç½®
 * 
 */
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 5f; // »ù´¡ÒÆ¶¯ËÙ¶È
-    public float sprintSpeedMultiplier = 2f; // ¼ÓËÙÊ±µÄ±¶Êı
-    public int maxStamina = 100; // ×î´óÌåÁ¦Öµ
-    public int staminaRecoveryRate = 3; // »Ö¸´ËÙÂÊ
-    public int sprintStaminaCostPerSecond = 5; // ¼ÓËÙÏûºÄ
+    public float speed = 5f; // åŸºç¡€ç§»åŠ¨é€Ÿåº¦
+    public float sprintSpeedMultiplier = 2f; // åŠ é€Ÿæ—¶çš„å€æ•°
+    public int maxStamina = 100; // æœ€å¤§ä½“åŠ›å€¼
+    public int staminaRecoveryRate = 3; // æ¢å¤é€Ÿç‡
+    public int sprintStaminaCostPerSecond = 5; // åŠ é€Ÿæ¶ˆè€—
 
     private Rigidbody2D rb;
     private bool isSprinting = false;
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
         currentStamina = maxStamina;
     }
 
-    // ¼ì²âÓÃ»§ÊÇ·ñ°´ÏÂ¡°Z¡±¼üÒÔ¼Ó¿ì½ÇÉ«ËÙ¶È£¨Èç¹ûÆäÌåÁ¦³ä×ã£©
+    // æ£€æµ‹ç”¨æˆ·æ˜¯å¦æŒ‰ä¸‹â€œZâ€é”®ä»¥åŠ å¿«è§’è‰²é€Ÿåº¦ï¼ˆå¦‚æœå…¶ä½“åŠ›å……è¶³ï¼‰
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z) && currentStamina > 0)
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // ´¦Àí»ùÓÚÎïÀíÒıÇæµÄ½ÇÉ«ÔË¶¯Âß¼­£¬°üÀ¨¿ØÖÆ»ù´¡»ò¼ÓÇ¿Ä£Ê½ËÙ¶ÈÒÔ¼°¸üĞÂÊ£ÓàÌåÁ¦¡£
+    // å¤„ç†åŸºäºç‰©ç†å¼•æ“çš„è§’è‰²è¿åŠ¨é€»è¾‘ï¼ŒåŒ…æ‹¬æ§åˆ¶åŸºç¡€æˆ–åŠ å¼ºæ¨¡å¼é€Ÿåº¦ä»¥åŠæ›´æ–°å‰©ä½™ä½“åŠ›ã€‚
     void FixedUpdate()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
@@ -46,13 +46,13 @@ public class PlayerController : MonoBehaviour
 
         Vector2 movement = new Vector2(moveHorizontal, moveVertical).normalized;
 
-        // ¿ØÖÆ»ù´¡ºÍ¼ÓÇ¿ËÙ¶ÈÖ®¼äµÄ×ª»»
+        // æ§åˆ¶åŸºç¡€å’ŒåŠ å¼ºé€Ÿåº¦ä¹‹é—´çš„è½¬æ¢
         float currentSpeed = isSprinting ? speed * sprintSpeedMultiplier : speed;
 
-        // ¿ØÖÆ½ÇÉ«µÄÔË¶¯
+        // æ§åˆ¶è§’è‰²çš„è¿åŠ¨
         rb.velocity = movement * currentSpeed;
 
-        // ÏûºÄÌåÁ¦£¨Èç¹û¼ÓËÙ£©»ò»Ø¸´ÌåÁ¦£¨Èç¹û²»¼ÓËÙ£©
+        // æ¶ˆè€—ä½“åŠ›ï¼ˆå¦‚æœåŠ é€Ÿï¼‰æˆ–å›å¤ä½“åŠ›ï¼ˆå¦‚æœä¸åŠ é€Ÿï¼‰
         if (isSprinting)
         {
             ConsumeStamina(sprintStaminaCostPerSecond * Time.fixedDeltaTime);
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // ¼õÉÙµ±Ç°Ê£ÓàÌåÁ¦Öµ£¬Í¬Ê±¸ù¾İĞèÒªÍ£Ö¹¼ÓËÙ¡£
+    // å‡å°‘å½“å‰å‰©ä½™ä½“åŠ›å€¼ï¼ŒåŒæ—¶æ ¹æ®éœ€è¦åœæ­¢åŠ é€Ÿã€‚
     private void ConsumeStamina(float amount)
     {
         if (currentStamina >= amount)
@@ -73,11 +73,11 @@ public class PlayerController : MonoBehaviour
         else
         {
             currentStamina = 0;
-            isSprinting = false; // Í£Ö¹¼ÓËÙ
+            isSprinting = false; // åœæ­¢åŠ é€Ÿ
         }
     }
 
-    // Ôö¼Óµ±Ç°Ê£ÓàµÄÌåÄÜ£¬Èç¹û³¬¹ı×î´óÖµ½«ÆäÈ¥µ½ maximum¡£
+    // å¢åŠ å½“å‰å‰©ä½™çš„ä½“èƒ½ï¼Œå¦‚æœè¶…è¿‡æœ€å¤§å€¼å°†å…¶å»åˆ° maximumã€‚
     private void RecoverStamina(float amount)
     {
         if (currentStamina < maxStamina)
