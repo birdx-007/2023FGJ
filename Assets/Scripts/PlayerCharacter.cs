@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerCharacter : MonoBehaviour
 {
@@ -10,7 +9,7 @@ public class PlayerCharacter : MonoBehaviour
     public float sprintSpeedMultiplier;
 
     public float jumpForce;
-    public float maxStamina ; // 最大体力值
+    public float maxStamina =100; // 最大体力值
     public float staminaRecoveryRate ; // 恢复速率
     public float sprintStaminaCostPerSecond ; // 加速消耗
 
@@ -19,7 +18,7 @@ public class PlayerCharacter : MonoBehaviour
     //跳跃
     private bool isJumping = false;
     private bool isSprinting = false;
-    private int currentStamina;
+    private float currentStamina;
 
 //攻击
     private bool attacking = false;
@@ -39,7 +38,7 @@ public class PlayerCharacter : MonoBehaviour
     {
         if (currentStamina >= amount)
         {
-            currentStamina -= (int)amount;
+            currentStamina -= amount;
         }
         else
         {
@@ -53,7 +52,7 @@ public class PlayerCharacter : MonoBehaviour
     {
         if (currentStamina < maxStamina)
         {
-            currentStamina += (int)amount;
+            currentStamina += amount;
 
             if (currentStamina > maxStamina)
             {
@@ -63,7 +62,7 @@ public class PlayerCharacter : MonoBehaviour
     }
 
 
-void Move(float moveHorizontal,bool sprinting)// movehorizontal横向，sprinting是否奔跑
+public void Move(float moveHorizontal,bool sprinting)// movehorizontal横向，sprinting是否奔跑
 {
     if(sprinting){
 
@@ -104,7 +103,7 @@ void Move(float moveHorizontal,bool sprinting)// movehorizontal横向，sprintin
 
 
 
-    private void Jump()
+    public void Jump()
     {
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         isJumping = true;
@@ -123,7 +122,5 @@ void Move(float moveHorizontal,bool sprinting)// movehorizontal横向，sprintin
         rb = GetComponent<Rigidbody2D>();
         currentStamina = maxStamina;
     }
-
-
 
 }

@@ -8,9 +8,10 @@ using UnityEngine.UI;
 * 加速键设置
 * 
 */
-public class PlayerController : MonoBehaviour
+public class PlayerController2 : MonoBehaviour
 {
     PlayerCharacter character;
+    bool isSprinting=false;
 
     void Start()
     {
@@ -21,7 +22,7 @@ public class PlayerController : MonoBehaviour
     // 检测用户是否按下“Z”键以加快角色速度（如果其体力充足）
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z) && currentStamina > 0)
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             isSprinting = true;
         }
@@ -30,7 +31,7 @@ public class PlayerController : MonoBehaviour
             isSprinting = false;
         }
         
-        if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             character.Jump();
         }
@@ -40,7 +41,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
-         character.Move(moveHorizontal,isSprinting);
+        character.Move(moveHorizontal,isSprinting);
   
     }
 
