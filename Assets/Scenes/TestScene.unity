@@ -590,7 +590,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1137852554}
-  - component: {fileID: 1137852553}
+  - component: {fileID: 1137852557}
+  - component: {fileID: 1137852556}
   - component: {fileID: 1137852552}
   - component: {fileID: 1137852555}
   m_Layer: 0
@@ -621,26 +622,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1137852553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1137852551}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bea08096be698a46ba6f44ea1edb066, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  staminaBar: {fileID: 1358726766}
-  speed: 10
-  sprintSpeedMultiplier: 2
-  jumpForce: 40
-  maxStamina: 100
-  staminaRecoveryRate: 30
-  sprintStaminaCostPerSecond: 50
-  currentStamina: 0
 --- !u!4 &1137852554
 Transform:
   m_ObjectHideFlags: 0
@@ -683,6 +664,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1137852556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137852551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16b59b677331c654b921faa5a888e3df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  sprintSpeedMultiplier: 2
+  jumpForce: 40
+  maxStamina: 100
+  staminaRecoveryRate: 30
+  sprintStaminaCostPerSecond: 40
+  healthMax: 15
+--- !u!114 &1137852557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137852551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9808323a2058d449bb9da1635b45816, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1358726762
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,10 +1154,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
