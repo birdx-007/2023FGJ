@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 /*
 * 设置人物基础基础速度、加速和体力消耗（加速移动消耗，其他情况回复体力）
 * 加速键设置
@@ -9,17 +10,19 @@ using UnityEngine;
 */
 public class PlayerController : MonoBehaviour
 {
+    public PropertyBarController staminaBar;
+    
     public float speed = 10f; // 基础移动速度
     public float sprintSpeedMultiplier = 2f; // 加速时的倍数
     public float jumpForce = 40f;
-    public int maxStamina = 100; // 最大体力值
-    public int staminaRecoveryRate = 3; // 恢复速率
-    public int sprintStaminaCostPerSecond = 5; // 加速消耗
+    public float maxStamina = 100f; // 最大体力值
+    public float staminaRecoveryRate = 30; // 恢复速率
+    public float sprintStaminaCostPerSecond = 50; // 加速消耗
 
     private Rigidbody2D rb;
     private bool isJumping = false;
     private bool isSprinting = false;
-    private int currentStamina;
+    public float currentStamina;
 
     void Start()
     {
@@ -82,13 +85,14 @@ public class PlayerController : MonoBehaviour
     {
         if (currentStamina >= amount)
         {
-            currentStamina -= (int)amount;
+            currentStamina -= amount;
         }
         else
         {
             currentStamina = 0;
             isSprinting = false; // 停止加速
         }
+        staminaBar.SetValue(currentStamina/maxStamina);
     }
 
     // 增加当前剩余的体能，如果超过最大值将其去到 maximum。
@@ -96,13 +100,14 @@ public class PlayerController : MonoBehaviour
     {
         if (currentStamina < maxStamina)
         {
-            currentStamina += (int)amount;
+            currentStamina += amount;
 
             if (currentStamina > maxStamina)
             {
                 currentStamina = maxStamina;
             }
         }
+        staminaBar.SetValue(currentStamina/maxStamina);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
