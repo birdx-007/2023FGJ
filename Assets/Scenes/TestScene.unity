@@ -343,8 +343,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bea08096be698a46ba6f44ea1edb066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 10
   sprintSpeedMultiplier: 2
+  jumpForce: 40
   maxStamina: 100
   staminaRecoveryRate: 3
   sprintStaminaCostPerSecond: 5
@@ -487,7 +488,7 @@ GameObject:
   - component: {fileID: 2117282685}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
