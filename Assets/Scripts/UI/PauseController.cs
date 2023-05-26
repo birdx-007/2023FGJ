@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.SceneManagement;
 
 public class PauseController : MonoBehaviour
 {
@@ -17,6 +17,16 @@ public class PauseController : MonoBehaviour
     {
         RecoverTimeScale();
         HidePauseMenu();
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void BackToMenu()
+    {
+        
     }
     public void ShowPauseMenu()
     {
