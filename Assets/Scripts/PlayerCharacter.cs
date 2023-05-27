@@ -87,7 +87,6 @@ public class PlayerCharacter : MonoBehaviour
             {
                 isSprinting = false;
             }
-
         }
         // 控制基础和加强速度之间的转换
         float currentSpeed = isSprinting ? speed * sprintSpeedMultiplier : speed;
@@ -107,9 +106,9 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
 
-    public void Jump()
+    public void Jump(float forceRatio = 1f)
     {
-        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        rb.AddForce(Vector2.up * (jumpForce * forceRatio), ForceMode2D.Impulse);
         isJumping = true;
     }
 

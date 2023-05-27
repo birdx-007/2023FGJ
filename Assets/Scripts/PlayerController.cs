@@ -8,6 +8,7 @@ using UnityEngine.UI;
 * 加速键设置
 * 
 */
+[RequireComponent(typeof(PlayerCharacter))]
 public class PlayerController : MonoBehaviour
 {
     PlayerCharacter character;
@@ -28,7 +29,6 @@ public class PlayerController : MonoBehaviour
         {
             character.isSprinting = false;
         }
-        
         if (Input.GetKeyDown(KeyCode.Space))
         {
             character.Jump();
