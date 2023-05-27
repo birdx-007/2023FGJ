@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerCharacter))]
 public class MosterController : MonoBehaviour
 {
     PlayerCharacter character;
@@ -11,20 +12,13 @@ public class MosterController : MonoBehaviour
     void Start ()
     {
         character = GetComponent<PlayerCharacter>();
-
         targetTrans = GameObject.FindGameObjectWithTag("Player").transform; //玩家名
-        
-
-        
-
     }
-
 
 	void Update ()
     {
         direct = targetTrans.position.x -character.transform.position.x;
-        Debug.Log(direct);
+        //Debug.Log(direct);
         character.Move(direct,false);
-
     }
 }

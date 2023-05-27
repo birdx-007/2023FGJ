@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour
 {
-    public PropertyBarController staminaBar;
-//死亡形象
-    public GameObject deathmMdel;
+    //死亡形象
+    public GameObject deathModel;
     //速度
     public float speed = 10f;
     public float sprintSpeedMultiplier = 2f;
 
     public float jumpForce = 40f;
     public float maxStamina = 100f; // 最大体力值
-    private float currentStamina;
+    public float currentStamina;
     public float staminaRecoveryRate = 20f; // 恢复速率
     public float sprintStaminaCostPerSecond = 40f; // 加速消耗
 
@@ -26,12 +25,12 @@ public class PlayerCharacter : MonoBehaviour
 
     //攻击
     //设计攻击冷却时间
-    private bool attacking = false;
+    public bool attacking = false;
 
     private int atttackmode;
 
     //生命
-    private float currentHealth;
+    public float currentHealth;
     public float maxHealth = 100f;
     bool isAlive;
 
@@ -90,7 +89,6 @@ public class PlayerCharacter : MonoBehaviour
             currentStamina = 0;
             isSprinting = false; // 停止加速
         }
-        staminaBar.SetValue(currentStamina/maxStamina);
     }
 
     // 增加当前剩余的体能，如果超过最大值将其去到 maximum。
@@ -105,7 +103,6 @@ public class PlayerCharacter : MonoBehaviour
                 currentStamina = maxStamina;
             }
         }
-        staminaBar.SetValue(currentStamina/maxStamina);
     }
     public void Move(float moveHorizontal, bool sprinting) // movehorizontal横向，sprinting是否奔跑
     {
@@ -145,6 +142,10 @@ public class PlayerCharacter : MonoBehaviour
 
     public void Jump(float forceRatio = 1f)
     {
+        if (isJumping)
+        {
+            return;
+        }
         rb.AddForce(Vector2.up * (jumpForce * forceRatio), ForceMode2D.Impulse);
         isJumping = true;
     }

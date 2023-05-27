@@ -11,6 +11,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(PlayerCharacter))]
 public class PlayerController : MonoBehaviour
 {
+    public PropertyBarController staminaBar;
     PlayerCharacter character;
 
     void Start()
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour
         {
             character.isSprinting = false;
         }
+        staminaBar.SetValue(character.currentStamina/character.maxStamina);
         if (Input.GetKeyDown(KeyCode.Space))
         {
             character.Jump();
