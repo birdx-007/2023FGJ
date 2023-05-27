@@ -89,10 +89,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3285392098059728073}
-  - component: {fileID: 3285392098059728117}
   - component: {fileID: 3285392098059728118}
   - component: {fileID: 3285392098059728119}
   - component: {fileID: 3285392098059728072}
+  - component: {fileID: 3285392098059728117}
+  - component: {fileID: 1011525796275133114}
   m_Layer: 5
   m_Name: SkillButton
   m_TagString: Untagged
@@ -122,21 +123,6 @@ RectTransform:
   m_AnchoredPosition: {x: 40, y: 0}
   m_SizeDelta: {x: 140, y: 140}
   m_Pivot: {x: 0, y: 0.5}
---- !u!114 &3285392098059728117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3285392098059728074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c58a3e032a0e0c846af21eec155eff73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillType: 1
-  skill: {fileID: 0}
-  CDFillImage: {fileID: 3285392098672699369}
 --- !u!222 &3285392098059728118
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -231,6 +217,37 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3285392098059728117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3285392098059728074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c58a3e032a0e0c846af21eec155eff73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CDFillImage: {fileID: 3285392098672699369}
+--- !u!114 &1011525796275133114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3285392098059728074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 910d32e2df10fa1468eeb11f666079e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canUseSkill: 0
+  totalCD: 0
+  CDratio: 0
+  OnSkillUsed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3285392098672699371
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,7 +314,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 5e5771859e78d34418fca5d0d7bccfd0, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
