@@ -2229,7 +2229,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1952108699
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2303,6 +2303,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mTextAsset: {fileID: 4900000, guid: a2ed760781354244398cd6b834af5e71, type: 3}
+  _textName: {fileID: 856184864}
+  _textContent: {fileID: 1122226594}
 --- !u!1 &2088951438
 GameObject:
   m_ObjectHideFlags: 0
