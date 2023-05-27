@@ -6,7 +6,7 @@ public class PlayerCharacter : MonoBehaviour
 {
     public PropertyBarController staminaBar;
 //死亡形象
-    public GameObject deathmMdel;
+    public GameObject deathModel;
     //速度
     public float speed = 10f;
     public float sprintSpeedMultiplier = 2f;
