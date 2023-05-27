@@ -40,7 +40,7 @@ public class SkillController : MonoBehaviour
         skillButton.interactable = skill.canUseSkill;
     }
 
-    public void Use()
+    public void Use() // exposed to player
     {
         if (skill == null)
         {

@@ -4,16 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerCharacter))]
+[RequireComponent(typeof(EnemyShootController))]
 public class MosterController : MonoBehaviour
 {
+    EnemyShootController enemyShoot;
     PlayerCharacter character;
     Transform targetTrans;
     float direct ;
     //记录攻击方式进行的次数
-    private int attackCount;
+    private int attackCount = 0;
 
-    void Start ()
+    void Start()
     {
+        enemyShoot = GetComponent<EnemyShootController>();
         character = GetComponent<PlayerCharacter>();
         targetTrans = GameObject.FindGameObjectWithTag("Player").transform; //玩家名
         //攻击循环
@@ -23,36 +26,26 @@ public class MosterController : MonoBehaviour
     {
         if (attackCount >= 3)
         {
-            Shoot_StraightLine();
+            enemyShoot.ShootBullet_StraightLine();
             attackCount = 0;
         }
         else
         {
-            Shoot_Parabola();
+            enemyShoot.ShootBullet_Parabola();
             attackCount++;
         }
     }
-
+    
     IEnumerator AttackLoop()
     {
         while (true)
         {
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1f);
             Attack();
         }
     }
 
-    //怪物攻击
-    void Shoot_StraightLine(){
-        EnemyShoot_StraightLine bullet;
-        bullet.ShootBullet();
-    }
-    void Shoot_Parabola(){
-        EnemyShoot_Parabola bullet;
-        bullet.ShootBullet();
-    }
-
-	void Update ()
+    void Update ()
     {
         direct = targetTrans.position.x -character.transform.position.x;
         //Debug.Log(direct);
