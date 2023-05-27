@@ -11,6 +11,7 @@ public struct QTEInput
     public int index;        // Order of the input in the sequence
     public string prompt;    // Text or visual cue for the input
     public KeyCode key;      // Key associated with the input
+    public UnityEvent onQTESuccessful;
 }
 
 public class QTE : MonoBehaviour
@@ -24,9 +25,6 @@ public class QTE : MonoBehaviour
     // Reference to UI elements for displaying QTE prompts and feedback
     public QTEUI qteUI;
 
-    // Event triggered when QTE is successfully completed
-    public UnityEvent onQTECompleted;
-
     private bool qteActive = false;
     private int currentQTEIndex = 0;
     private float qteTimer = 0f;
@@ -34,6 +32,7 @@ public class QTE : MonoBehaviour
     private void Start()
     {
         qteTimer = inputDetectionWindow;
+        qteUI.enabled = false;
     }
 
     private void Update()
@@ -79,12 +78,14 @@ public class QTE : MonoBehaviour
         qteTimer = inputDetectionWindow;
 
         // Display QTE prompt
+        qteUI.enabled = true;
         qteUI.ResetUI();
         qteUI.DisplayQTEPrompt(qteInputs[currentQTEIndex].prompt);
     }
 
     private void QTESuccessful()
     {
+        qteInputs[currentQTEIndex].onQTESuccessful.Invoke();
         // Proceed to the next QTE input
         currentQTEIndex++;
 
@@ -121,8 +122,5 @@ public class QTE : MonoBehaviour
         qteUI.DisplayQTEFeedback(true);
 
         // Perform necessary actions on successful completion
-
-        // Trigger the QTE completion event
-        onQTECompleted.Invoke();
     }
 }
