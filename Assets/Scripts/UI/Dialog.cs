@@ -14,8 +14,8 @@ public TextAsset _mTextAsset;
 public List<string[]> List_diaContents = new List<string[]>(); //用来存储所有的对话内容
  
 //public Image dialogueBg; //对话款背景
-private Text _textName; //对话人物的名字
-private Text _textContent; //对话人物说的话
+public Text _textName; //对话人物的名字
+public Text _textContent; //对话人物说的话
 //public Image _imageHead; //头像
 //public Sprite[] IconSprites;//所有头像集合
  
@@ -29,8 +29,8 @@ private void Awake()
 }
 void Start () {
     CreateDialogue(_mTextAsset);
-    _textName =GameObject.Find("TextName").GetComponent<Text>();
-    _textContent =GameObject.Find("TextContent").GetComponent<Text>();
+    //_textName =GameObject.Find("TextName").GetComponent<Text>();
+    //_textContent =GameObject.Find("TextContent").GetComponent<Text>();
     //tweener = dialogueBg.rectTransform.DOLocalMoveY(-150, 0.5f).SetEase(Ease.InBack) .SetAutoKill(false);
     //tweener.Pause(); //动画一开始设置为暂停
     
@@ -59,8 +59,7 @@ for (int i = 0; i < textAll.Length; i++)
     List_diaContents.Add(contents); //把名字 对话 头像 存进List
     //Debug.Log(List_diaContents.Count);
 }
-Debug.Log(List_diaContents[index][0]);
-Debug.Log("data load");
+
 
 //tweener.PlayForward(); //播放对话框进入屏幕的动画
 }
@@ -70,10 +69,10 @@ if (isChat)
 {
     //Debug.Log(List_diaContents[index][0]);
     _textName.text = List_diaContents[index][0]; //显示对话人物的名称
-    _textContent.text = List_diaContents[index][1];//显示对话的内容
+    //_textContent.text = List_diaContents[index][1];//显示对话的内容
     //int i = int.Parse(List_diaContents[index][2]);
     //_imageHead.sprite = IconSprites[i];//显示头像
-    if (Input.GetKeyDown(KeyCode.Space))
+    if (Input.GetKeyDown(KeyCode.T))
     {
         Debug.Log("next");//
         index ++;
@@ -87,7 +86,7 @@ if (isChat)
     }
 }
 else{
-    _textContent.text="";
+    //_textContent.text="";
     _textName.text = "";
     
 
