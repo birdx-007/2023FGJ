@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour
 {
-    //死亡形象
     public GameObject deathModel;
     //速度
     public float speed = 10f;
