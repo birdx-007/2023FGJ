@@ -5,12 +5,15 @@ using UnityEngine;
 public class PlayerCharacter : MonoBehaviour
 {
     public PropertyBarController staminaBar;
+//死亡形象
+    public GameObject deathmMdel;
     //速度
     public float speed = 10f;
     public float sprintSpeedMultiplier = 2f;
 
     public float jumpForce = 40f;
     public float maxStamina = 100f; // 最大体力值
+    private float currentStamina;
     public float staminaRecoveryRate = 20f; // 恢复速率
     public float sprintStaminaCostPerSecond = 40f; // 加速消耗
 
@@ -19,16 +22,17 @@ public class PlayerCharacter : MonoBehaviour
     //跳跃
     public bool isJumping = false;
     public bool isSprinting = false;
-    private float currentStamina;
+
 
     //攻击
+    //设计攻击冷却时间
     private bool attacking = false;
 
     private int atttackmode;
 
     //生命
     private float currentHealth;
-    public float maxHealth = 15f;
+    public float maxHealth = 100f;
     bool isAlive;
 
 
@@ -38,8 +42,41 @@ public class PlayerCharacter : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         currentStamina = maxStamina;
         currentHealth = maxHealth;
+        isAlive = true;
+    }
+//受伤
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+        //TO DO
+        //血量UI刷新
+
+        if (currentHealth <= 0f && isAlive)
+        {
+            Death();
+        }
     }
 
+    //死亡
+    public void Death()
+    {
+        isAlive = false;
+        GetComponent<Renderer>().enabled = false;
+        rb.isKinematic = true;
+
+        // 激活死亡形象
+        deathModel.SetActive(true);
+
+    }
+
+//
+    public void stand_attack()
+    {
+        if (!isAlive) return;
+        if (attacking) return;
+
+        //攻击
+    }
 
 // 减少当前剩余体力值，同时根据需要停止加速。
     private void ConsumeStamina(float amount)
