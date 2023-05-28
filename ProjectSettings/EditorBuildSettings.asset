@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UITestScene.unity
     guid: d9c7b01872ee53349a45a511eb032712
+  - enabled: 1
+    path: Assets/Scenes/BeginAnimation.unity
+    guid: a6848462d977c1847bb34d0ec3b0b9bb
+  - enabled: 1
+    path: Assets/Scenes/Begin.unity
+    guid: 8a6e9a68c9cb73c44922d42e5bb0804f
   m_configObjects: {}

@@ -5,8 +5,13 @@ using UnityEngine;
 public class Character_Player : MonoBehaviour
 {
     public GameObject deathModel;
+    public Animator animator;
+    public SpriteRenderer renderer;
     public GameObject playerBulletPrefab;
     public ParticleSystem teleportParticle;
+
+    public PlayerSladeController sladeRight;
+    public PlayerSladeController sladeLeft;
     //速度
     public float speed = 10f;
     public float sprintSpeedMultiplier = 2f;
@@ -20,6 +25,7 @@ public class Character_Player : MonoBehaviour
     public float teleportStaminaCostPerSecond = 100f;
 
     private Rigidbody2D rb;
+    private float faceDirection;
 
     public bool isJumping = false;
     public bool isSprinting = false;
@@ -52,16 +58,20 @@ public class Character_Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        faceDirection = 1f;
         currentStamina = maxStamina;
         currentHealth = maxHealth;
         isAlive = true;
         teleportTimer = 0;
         teleportParticle.Stop();
+        sladeLeft.gameObject.SetActive(false);
+        sladeRight.gameObject.SetActive(false);
     }
 
     // 中毒debuff
     IEnumerator PoisonousGasEffect()
     {
+        renderer.color = Color.green;
         while (poisonedTimeLeft > 0)
         {
             Debug.Log("PoisonousGasEffect: " + poisonedTimeLeft + "s left");
@@ -70,10 +80,15 @@ public class Character_Player : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
         isPoisoned = false;
+        renderer.color = Color.white;
     }
 
     public void PoisonousGasEffectOn()
     {
+        if (!isVunerable)
+        {
+            return;
+        }
         poisonedTimeLeft = 3f;
         if (isPoisoned)
             return;
@@ -89,6 +104,23 @@ public class Character_Player : MonoBehaviour
             Debug.Log("Player is invunerable!");
             return;
         }
+        renderer.color = Color.red;
+
+        IEnumerator RecoverColor()
+        {
+            yield return new WaitForSeconds(0.2f);
+            if (isPoisoned)
+            {
+                renderer.color = Color.green;
+            }
+            else
+            {
+                renderer.color = Color.white;
+            }
+        }
+
+        StartCoroutine(RecoverColor());
+        animator.SetTrigger("hurt");
         currentHealth -= amount;
         if (currentHealth <= 0f && isAlive)
         {
@@ -110,12 +142,40 @@ public class Character_Player : MonoBehaviour
     }
 
 //
-    public void stand_attack()
+    public void Attack()
     {
         if (!isAlive) return;
         if (attacking) return;
 
         //攻击
+        animator.SetTrigger("punch");
+        attacking = true;
+        IEnumerator StopPunch()
+        {
+            yield return new WaitForSeconds(1f);
+            sladeLeft.gameObject.SetActive(false);
+            sladeRight.gameObject.SetActive(false);
+            attacking = false;
+        }
+
+        IEnumerator ReleasePunch()
+        {
+            yield return new WaitForSeconds(1f);
+            if (faceDirection > 0f)
+            {
+                sladeLeft.gameObject.SetActive(false);
+                sladeRight.gameObject.SetActive(true);
+            }
+            else
+            {
+                sladeLeft.gameObject.SetActive(true);
+                sladeRight.gameObject.SetActive(false);
+            }
+
+            StartCoroutine(StopPunch());
+        }
+
+        StartCoroutine(ReleasePunch());
     }
 
 // 减少当前剩余体力值，同时根据需要停止加速。
@@ -147,6 +207,17 @@ public class Character_Player : MonoBehaviour
     }
     public void Move(float moveHorizontal) // movehorizontal横向，sprinting是否奔跑
     {
+        if (!Mathf.Approximately(moveHorizontal, 0f))
+        {
+            faceDirection = moveHorizontal / Mathf.Abs(moveHorizontal);
+            animator.SetBool("isRunning", true);
+        }
+        else
+        {
+            animator.SetBool("isRunning", false);
+        }
+        animator.SetFloat("direction", faceDirection);
+        
         float currentSpeed = speed;
         if (isSprinting)
         {
@@ -185,6 +256,11 @@ public class Character_Player : MonoBehaviour
 
         // 控制角色的运动
         rb.velocity = new Vector2(moveHorizontal * currentSpeed, rb.velocity.y);
+        if (isTeleporting)
+        {
+            rb.velocity = new Vector2(faceDirection * currentSpeed, rb.velocity.y);
+        }
+        
 
         // 回复体力（如果不加速）
         if (!isSprinting && !isTeleporting)
@@ -199,6 +275,7 @@ public class Character_Player : MonoBehaviour
         {
             return;
         }
+        animator.SetTrigger("jump");
         rb.AddForce(Vector2.up * (jumpForce * forceRatio), ForceMode2D.Impulse);
         isJumping = true;
     }
@@ -219,11 +296,13 @@ public class Character_Player : MonoBehaviour
         {
             return;
         }
+        animator.SetTrigger("teleport");
         isTeleporting = true;
     }
 
     public void FireBullets()
     {
+        animator.SetTrigger("fire");
         // Calculate the angle between bullets
         float angleStep = Mathf.PI / (bulletNum - 1);
 
@@ -236,15 +315,18 @@ public class Character_Player : MonoBehaviour
             bullet.GetComponent<PlayerBulletController>().SetDirection(direction);
         }
 
-        StartCoroutine(KeepInvunerable(1f));
+        StartCoroutine(KeepInvunerable(2f));
     }
 
     IEnumerator KeepInvunerable(float time)
     {
+        teleportParticle.Play();
         isVunerable = false;
         yield return new WaitForSeconds(time);
         isVunerable = true;
+        teleportParticle.Stop();
     }
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
