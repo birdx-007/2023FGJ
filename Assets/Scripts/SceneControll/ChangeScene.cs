@@ -9,10 +9,12 @@ public class ChangeScene : MonoBehaviour
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
-                        
         {
-                    SceneManager.LoadScene(sceneToLoad);
-
+            SceneManager.LoadScene(sceneToLoad);
         }
+    }
+    public void GoToScene()
+    {
+        SceneManager.LoadScene(sceneToLoad);
     }
 }
