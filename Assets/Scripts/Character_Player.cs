@@ -5,6 +5,7 @@ using UnityEngine;
 public class Character_Player : MonoBehaviour
 {
     public GameObject deathModel;
+    public Animator animator;
     public GameObject playerBulletPrefab;
     public ParticleSystem teleportParticle;
     //速度
@@ -20,6 +21,7 @@ public class Character_Player : MonoBehaviour
     public float teleportStaminaCostPerSecond = 100f;
 
     private Rigidbody2D rb;
+    private float faceDirection;
 
     public bool isJumping = false;
     public bool isSprinting = false;
@@ -46,6 +48,7 @@ public class Character_Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        faceDirection = 1f;
         currentStamina = maxStamina;
         currentHealth = maxHealth;
         isAlive = true;
@@ -59,6 +62,7 @@ public class Character_Player : MonoBehaviour
         {
             return;
         }
+        animator.SetTrigger("hurt");
         currentHealth -= amount;
         if (currentHealth <= 0f && isAlive)
         {
@@ -86,6 +90,7 @@ public class Character_Player : MonoBehaviour
         if (attacking) return;
 
         //攻击
+        animator.SetTrigger("punch");
     }
 
 // 减少当前剩余体力值，同时根据需要停止加速。
@@ -117,6 +122,12 @@ public class Character_Player : MonoBehaviour
     }
     public void Move(float moveHorizontal) // movehorizontal横向，sprinting是否奔跑
     {
+        if (!Mathf.Approximately(moveHorizontal, 0f))
+        {
+            faceDirection = moveHorizontal / Mathf.Abs(moveHorizontal);
+        }
+        animator.SetFloat("direction", faceDirection);
+        
         float currentSpeed = speed;
         if (isSprinting)
         {
@@ -169,6 +180,7 @@ public class Character_Player : MonoBehaviour
         {
             return;
         }
+        animator.SetTrigger("jump");
         rb.AddForce(Vector2.up * (jumpForce * forceRatio), ForceMode2D.Impulse);
         isJumping = true;
     }
@@ -189,11 +201,13 @@ public class Character_Player : MonoBehaviour
         {
             return;
         }
+        animator.SetTrigger("teleport");
         isTeleporting = true;
     }
 
     public void FireBullets()
     {
+        animator.SetTrigger("fire");
         // Calculate the angle between bullets
         float angleStep = Mathf.PI / (bulletNum - 1);
 
@@ -206,7 +220,7 @@ public class Character_Player : MonoBehaviour
             bullet.GetComponent<PlayerBulletController>().SetDirection(direction);
         }
 
-        StartCoroutine(KeepInvunerable(1f));
+        StartCoroutine(KeepInvunerable(2f));
     }
 
     IEnumerator KeepInvunerable(float time)
