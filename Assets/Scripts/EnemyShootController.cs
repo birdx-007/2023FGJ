@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-class EnemyShootController : MonoBehaviour
+class   EnemyShootController : MonoBehaviour
 {
     public GameObject bulletPrefab;
     private Rigidbody2D bulletRigidBody;
