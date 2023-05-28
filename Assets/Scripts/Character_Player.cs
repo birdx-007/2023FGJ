@@ -5,7 +5,7 @@ using UnityEngine;
 public class Character_Player : MonoBehaviour
 {
     public GameObject deathModel;
-
+    public GameObject playerBulletPrefab;
     public ParticleSystem teleportParticle;
     //速度
     public float speed = 10f;
@@ -34,6 +34,8 @@ public class Character_Player : MonoBehaviour
     public bool attacking = false;
 
     private int atttackmode;
+
+    public int bulletNum = 5;
 
     //生命
     public float currentHealth;
@@ -190,6 +192,29 @@ public class Character_Player : MonoBehaviour
         isTeleporting = true;
     }
 
+    public void FireBullets()
+    {
+        // Calculate the angle between bullets
+        float angleStep = Mathf.PI / (bulletNum - 1);
+
+        // Spawn multiple bullets
+        for (int i = 0; i < bulletNum; i++)
+        {
+            Vector2 direction = Vector2.up * Mathf.Sin(i * angleStep) + Vector2.right * Mathf.Cos(i * angleStep);
+            // Create a bullet instance
+            GameObject bullet = Instantiate(playerBulletPrefab, rb.position + Vector2.up*0.5f, Quaternion.identity);
+            bullet.GetComponent<PlayerBulletController>().SetDirection(direction);
+        }
+
+        StartCoroutine(KeepInvunerable(1f));
+    }
+
+    IEnumerator KeepInvunerable(float time)
+    {
+        isVunerable = false;
+        yield return new WaitForSeconds(time);
+        isVunerable = true;
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))

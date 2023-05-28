@@ -6116,6 +6116,7 @@ MonoBehaviour:
   staminaBar: {fileID: 1358726766}
   healthBar: {fileID: 1168913804}
   skillTeleport: {fileID: 1392180941}
+  skillFire: {fileID: 1864342782}
 --- !u!95 &1137852558
 Animator:
   serializedVersion: 5
@@ -6150,6 +6151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathModel: {fileID: 0}
+  playerBulletPrefab: {fileID: 7756212861581553827, guid: 425a34199000aec47a7b2d9d869d9a85, type: 3}
   teleportParticle: {fileID: 431768731}
   speed: 10
   sprintSpeedMultiplier: 2
@@ -6166,6 +6168,7 @@ MonoBehaviour:
   canTeleport: 0
   maxTeleportTime: 0.5
   attacking: 0
+  bulletNum: 5
   currentHealth: 0
   maxHealth: 100
   isVunerable: 1
@@ -6885,6 +6888,61 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1864342780 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3285392098059728074, guid: c3152561b686734488a19f552b9762f5, type: 3}
+  m_PrefabInstance: {fileID: 3285392098649690135}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1864342782 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3285392098059728117, guid: c3152561b686734488a19f552b9762f5, type: 3}
+  m_PrefabInstance: {fileID: 3285392098649690135}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864342780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c58a3e032a0e0c846af21eec155eff73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1864342786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864342780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceacbb18ec17a984db7927f84e103408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  qteInputs:
+  - index: 0
+    prompt: Q
+    key: 113
+  - index: 1
+    prompt: W
+    key: 119
+  - index: 2
+    prompt: E
+    key: 101
+  inputDetectionWindow: 1
+  qteUI: {fileID: 1290476840}
+  onQTECompleted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1137852559}
+        m_TargetAssemblyTypeName: Character_Player, Assembly-CSharp
+        m_MethodName: FireBullets
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1881504847
 GameObject:
   m_ObjectHideFlags: 0
@@ -7273,7 +7331,35 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1011525796275133114, guid: c3152561b686734488a19f552b9762f5, type: 3}
       propertyPath: totalCD
-      value: 0.5
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011525796275133114, guid: c3152561b686734488a19f552b9762f5, type: 3}
+      propertyPath: OnSkillUsed.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011525796275133114, guid: c3152561b686734488a19f552b9762f5, type: 3}
+      propertyPath: OnSkillUsed.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011525796275133114, guid: c3152561b686734488a19f552b9762f5, type: 3}
+      propertyPath: OnSkillUsed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1864342786}
+    - target: {fileID: 1011525796275133114, guid: c3152561b686734488a19f552b9762f5, type: 3}
+      propertyPath: OnSkillUsed.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011525796275133114, guid: c3152561b686734488a19f552b9762f5, type: 3}
+      propertyPath: OnSkillUsed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartQTE
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011525796275133114, guid: c3152561b686734488a19f552b9762f5, type: 3}
+      propertyPath: OnSkillUsed.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: QTE, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011525796275133114, guid: c3152561b686734488a19f552b9762f5, type: 3}
+      propertyPath: OnSkillUsed.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3285392098059728073, guid: c3152561b686734488a19f552b9762f5, type: 3}
       propertyPath: m_Pivot.x
@@ -7361,7 +7447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3285392098059728074, guid: c3152561b686734488a19f552b9762f5, type: 3}
       propertyPath: m_Name
-      value: Skill1
+      value: SkillFire
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3152561b686734488a19f552b9762f5, type: 3}

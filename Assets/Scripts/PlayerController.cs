@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public PropertyBarController staminaBar;
     public PropertyBarController healthBar;
     public SkillController skillTeleport;
+    public SkillController skillFire;
     Character_Player character;
     private float moveHorizontal;
 
@@ -43,6 +44,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             skillTeleport.Use();
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            skillFire.Use();
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
