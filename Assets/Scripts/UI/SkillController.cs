@@ -24,7 +24,7 @@ public class SkillController : MonoBehaviour
 
     public void Use() // exposed to player
     {
-        if (skill == null)
+        if (skill == null || !skill.canUseSkill)
         {
             return;
         }

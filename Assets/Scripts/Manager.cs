@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class Manager : MonoBehaviour
 {
     private PlayerController player;
+    public MosterController moster;
     public QTE qte;
     private void Awake()
     {
