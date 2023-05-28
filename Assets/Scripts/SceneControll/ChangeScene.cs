@@ -1,19 +1,18 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class ChangeScene : MonoBehaviour
 {
-    public Button changeSceneButton;
-    public string targetScene;
+    public GameObject imageObject; //指定该脚本所控制的图片对象
+    public string sceneToLoad;
 
-    void Start()
+    private void Update()
     {
-        changeSceneButton.onClick.AddListener(ChangeToTestScene);
-    }
+        if (Input.GetMouseButtonDown(0))
+                        
+        {
+                    SceneManager.LoadScene(sceneToLoad);
 
-    void ChangeToTestScene()
-    {
-        SceneManager.LoadScene(targetScene); 
+        }
     }
 }
