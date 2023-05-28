@@ -20,10 +20,27 @@ public class BulletController : MonoBehaviour
     public Vector2 direction = Vector2.zero;
     public float gravity = 0f;
     public float lifeTime = 0f;
+    public Vector2 inertia; //发射时角色移动速度
+
+    public GameObject attackEffectPrefab;
+    private Rigidbody2D attackEffectRb;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    public void SetOnBulletEffect(Vector2 position)
+    {
+        if (bulletType == BulletType.Vertical)
+        {
+            GameObject effect = Instantiate(attackEffectPrefab, transform.position, Quaternion.identity);
+            attackEffectRb = effect.GetComponent<Rigidbody2D>();
+
+            // 设置效果类型
+            AttackEffectController attackEffectController = effect.GetComponent<AttackEffectController>();
+            attackEffectController.effectType = EffectType.PoisonousGas;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -31,10 +48,13 @@ public class BulletController : MonoBehaviour
         if (other.CompareTag("Ground"))
         {
             Destroy(gameObject);
+            // 在消失的地方生成攻击效果
+            SetOnBulletEffect(transform.position);
         }
         else if (other.CompareTag("Player"))
         {
-            PlayerController player = other.GetComponent<PlayerController>();
+            PlayerCharacter player = other.GetComponent<PlayerController>().character;
+            player.TakeDamage(15f);
             Destroy(gameObject);
         }
     }
@@ -52,6 +72,11 @@ public class BulletController : MonoBehaviour
             t += Time.deltaTime * turnSpeed;
             yield return null;
         }
+    }
+
+    public void setInertia(Vector2 inertia)
+    {
+        this.inertia = inertia;
     }
 
     private void Update()

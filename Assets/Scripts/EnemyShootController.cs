@@ -28,12 +28,16 @@ class EnemyShootController : MonoBehaviour
         Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
         bulletRb.gravityScale = 0;
         bulletRb.velocity = direction.normalized * bulletSpeed;
+
+        // 设置子弹类型
+        BulletController bulletController = bullet.GetComponent<BulletController>();
+        bulletController.bulletType = BulletType.StraightLine;
     }
 
-    public void ShootBullet_Parabola(float gravity = 10f)
+    public void ShootBullet_Parabola(Vector2 direction, float gravity = 10f)
     {
-        // Calculate the direction from the enemy to the player
-        Vector2 direction = playerTransform.position - transform.position;
+        // // Calculate the direction from the enemy to the player
+        // Vector2 direction = playerTransform.position - transform.position;
 
         // Calculate the time of flight
         float timeOfFlight = Mathf.Abs(direction.x) / bulletSpeed;
@@ -50,6 +54,10 @@ class EnemyShootController : MonoBehaviour
         Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
         bulletRb.gravityScale = gravity / 10f;
         bulletRb.velocity = new Vector2(initialVelocityX, initialVelocityY);
+
+        // 设置子弹类型
+        BulletController bulletController = bullet.GetComponent<BulletController>();
+        bulletController.bulletType = BulletType.Parabola;
     }
 
     /// Shoots a bullet horizontally
@@ -62,6 +70,10 @@ class EnemyShootController : MonoBehaviour
         Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
         bulletRb.gravityScale = 0;
         bulletRb.velocity = new Vector2(0, -bulletSpeed);
+
+        // 设置子弹类型
+        BulletController bulletController = bullet.GetComponent<BulletController>();
+        bulletController.bulletType = BulletType.Vertical;
     }
 
     /// Shoots a bullet that follows a spiral trajectory

@@ -12,7 +12,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public PropertyBarController staminaBar;
-    PlayerCharacter character;
+    public PlayerCharacter character;
 
     void Start()
     {
