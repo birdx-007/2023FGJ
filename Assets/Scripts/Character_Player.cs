@@ -45,6 +45,12 @@ public class Character_Player : MonoBehaviour
     public bool isVunerable = true;
     bool isAlive;
 
+    
+    // debuff
+    public bool isPoisoned = false;
+    public float poisonedTimeLeft = 0f;
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -55,11 +61,35 @@ public class Character_Player : MonoBehaviour
         teleportTimer = 0;
         teleportParticle.Stop();
     }
+
+    // 中毒debuff
+    IEnumerator PoisonousGasEffect()
+    {
+        while (poisonedTimeLeft > 0)
+        {
+            Debug.Log("PoisonousGasEffect: " + poisonedTimeLeft + "s left");
+            TakeDamage(5f);
+            poisonedTimeLeft -= 1;
+            yield return new WaitForSeconds(1);
+        }
+        isPoisoned = false;
+    }
+
+    public void PoisonousGasEffectOn()
+    {
+        poisonedTimeLeft = 3f;
+        if (isPoisoned)
+            return;
+        StartCoroutine(PoisonousGasEffect());
+        Debug.Log("Get Poisoned!");
+        isPoisoned = true;
+    }
     //受伤
     public void TakeDamage(float amount)
     {
         if (!isVunerable)
         {
+            Debug.Log("Player is invunerable!");
             return;
         }
         animator.SetTrigger("hurt");

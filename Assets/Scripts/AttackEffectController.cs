@@ -22,23 +22,27 @@ public class AttackEffectController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         switch (effectType)
         {
-            case EffectType.PoisonousGas:
-                StartCoroutine(FlameEffect(5));
+            case EffectType.Explosion:
+                Debug.Log("Set explosion effect");
+                lifeTime = 1.5f;
+                StartCoroutine(AttackEffect());
                 break;
-
+            case EffectType.PoisonousGas:
+                Debug.Log("Set poisonous gas effect");
+                lifeTime = 5f;
+                StartCoroutine(AttackEffect());
+                break;
             default:
                 break;
         }
     }
 
-    IEnumerator FlameEffect(float duration = 3f)
+    IEnumerator AttackEffect()
     {
-        while (duration > 0)
+        while (lifeTime > 0)
         {
             // 检查与玩家碰撞
-
-
-            duration -= 1;
+            lifeTime -= 1;
             yield return new WaitForSeconds(1);
         }
         Destroy(gameObject);
@@ -48,8 +52,11 @@ public class AttackEffectController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerCharacter player = other.GetComponent<PlayerCharacter>();
-            player.PoisonousGasEffectOn();
+            Character_Player player = other.GetComponent<PlayerController>().character;
+            if (effectType == EffectType.PoisonousGas)
+            {
+                player.PoisonousGasEffectOn();
+            }
         }
     }
 }

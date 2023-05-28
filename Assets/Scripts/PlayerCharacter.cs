@@ -33,10 +33,6 @@ public class PlayerCharacter : MonoBehaviour
     public float maxHealth = 100f;
     bool isAlive;
 
-    // debuff
-    public bool isPoisoned = false;
-    public float poisonedTimeLeft = 0f;
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -45,28 +41,6 @@ public class PlayerCharacter : MonoBehaviour
         isAlive = true;
     }
 
-    // 中毒debuff
-    IEnumerator PoisonousGasEffect()
-    {
-        while (poisonedTimeLeft > 0)
-        {
-            Debug.Log("PoisonousGasEffect: " + poisonedTimeLeft + "s left");
-            TakeDamage(5f);
-            poisonedTimeLeft -= 1;
-            yield return new WaitForSeconds(1);
-        }
-        isPoisoned = false;
-    }
-
-    public void PoisonousGasEffectOn()
-    {
-        poisonedTimeLeft = 3f;
-        if (isPoisoned)
-            return;
-        StartCoroutine(PoisonousGasEffect());
-        Debug.Log("Get Poisoned!");
-        isPoisoned = true;
-    }
 
     // 受伤
     public void TakeDamage(float amount)
