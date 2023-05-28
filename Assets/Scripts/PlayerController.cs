@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     // 检测用户是否按下“Z”键以加快角色速度（如果其体力充足）
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             character.isSprinting = true;
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
         {
             character.isSprinting = false;
         }
+        */
         staminaBar.SetValue(character.currentStamina/character.maxStamina);
         healthBar.SetValue(character.currentHealth/character.maxHealth);
         if (Input.GetKeyDown(KeyCode.Space))
@@ -54,10 +56,12 @@ public class PlayerController : MonoBehaviour
         {
             skillFire.Use();
         }
+        /*
         if (Input.GetKeyDown(KeyCode.Z))
         {
             character.Teleport();
         }
+        */
     }
 
     // 处理基于物理引擎的角色运动逻辑，包括控制基础或加强模式速度以及更新剩余体力。

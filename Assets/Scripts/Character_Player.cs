@@ -256,6 +256,11 @@ public class Character_Player : MonoBehaviour
 
         // 控制角色的运动
         rb.velocity = new Vector2(moveHorizontal * currentSpeed, rb.velocity.y);
+        if (isTeleporting)
+        {
+            rb.velocity = new Vector2(faceDirection * currentSpeed, rb.velocity.y);
+        }
+        
 
         // 回复体力（如果不加速）
         if (!isSprinting && !isTeleporting)
@@ -315,9 +320,11 @@ public class Character_Player : MonoBehaviour
 
     IEnumerator KeepInvunerable(float time)
     {
+        teleportParticle.Play();
         isVunerable = false;
         yield return new WaitForSeconds(time);
         isVunerable = true;
+        teleportParticle.Stop();
     }
     
     private void OnCollisionEnter2D(Collision2D collision)
