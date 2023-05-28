@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCharacter : MonoBehaviour
 {
     public GameObject deathModel;
+
     //速度
     public float speed = 10f;
     public float sprintSpeedMultiplier = 2f;
@@ -21,7 +22,6 @@ public class PlayerCharacter : MonoBehaviour
     public bool isJumping = false;
     public bool isSprinting = false;
 
-
     //攻击
     //设计攻击冷却时间
     public bool attacking = false;
@@ -33,8 +33,6 @@ public class PlayerCharacter : MonoBehaviour
     public float maxHealth = 100f;
     bool isAlive;
 
-
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -42,7 +40,8 @@ public class PlayerCharacter : MonoBehaviour
         currentHealth = maxHealth;
         isAlive = true;
     }
-//受伤
+
+    //受伤
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
@@ -64,19 +63,20 @@ public class PlayerCharacter : MonoBehaviour
 
         // 激活死亡形象
         deathModel.SetActive(true);
-
     }
 
-//
+    //
     public void stand_attack()
     {
-        if (!isAlive) return;
-        if (attacking) return;
+        if (!isAlive)
+            return;
+        if (attacking)
+            return;
 
         //攻击
     }
 
-// 减少当前剩余体力值，同时根据需要停止加速。
+    // 减少当前剩余体力值，同时根据需要停止加速。
     private void ConsumeStamina(float amount)
     {
         if (currentStamina >= amount)
@@ -103,6 +103,7 @@ public class PlayerCharacter : MonoBehaviour
             }
         }
     }
+
     public void Move(float moveHorizontal, bool sprinting) // movehorizontal横向，sprinting是否奔跑
     {
         if (sprinting)
@@ -155,5 +156,38 @@ public class PlayerCharacter : MonoBehaviour
         {
             isJumping = false;
         }
+    }
+
+    public void setGravity(float gravity)
+    {
+        rb.gravityScale = gravity;
+    }
+
+    public void setVelocity(Vector2 velocity)
+    {
+        rb.velocity = velocity;
+    }
+
+    public void FlyIntoSky(float destHeight)
+    {
+        // 动态计算速度，离开地面时速度为 0，到达最高点时速度为 0，先加速后减速
+        float curHeight = transform.position.y,
+            groudHeight = -2.55f;
+        rb.velocity = new Vector2(
+            0,
+            Mathf.Sin(Mathf.PI * (curHeight - groudHeight + 1) / (destHeight - groudHeight + 1)) * 5
+                + 0.2f
+        );
+        // 输出debug信息
+        Debug.Log(
+            "curHeight: "
+                + curHeight
+                + "groudHeight: "
+                + groudHeight
+                + ", destHeight: "
+                + destHeight
+                + ", velocity: "
+                + rb.velocity
+        );
     }
 }
