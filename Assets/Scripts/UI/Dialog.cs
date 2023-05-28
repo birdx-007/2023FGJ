@@ -14,12 +14,12 @@ public class Dialog : MonoBehaviour
 
     public List<string[]> List_diaContents = new List<string[]>(); //用来存储所有的对话内容
 
-//public Image dialogueBg; //对话款背景
+    public Image dialogueBg; //对话款背景
     public Text _textName; //对话人物的名字
 
     public Text _textContent; //对话人物说的话
-//public Image _imageHead; //头像
-//public Sprite[] IconSprites;//所有头像集合
+    public Image _imageHead;
+    public Sprite[] IconSprites;//所有头像集合
 
     private bool isChat = false; //是否在对话
 
@@ -34,12 +34,10 @@ public class Dialog : MonoBehaviour
     void Start()
     {
         CreateDialogue(_mTextAsset);
-        //_textName =GameObject.Find("TextName").GetComponent<Text>();
-        //_textContent =GameObject.Find("TextContent").GetComponent<Text>();
         //tweener = dialogueBg.rectTransform.DOLocalMoveY(-150, 0.5f).SetEase(Ease.InBack) .SetAutoKill(false);
         //tweener.Pause(); //动画一开始设置为暂停
 
-        //IconSprites = Resources.LoadAll<Sprite>("Icon"); //获取所有头像集合
+        IconSprites = Resources.LoadAll<Sprite>("Icon"); //获取所有头像集合
     }
 
     /// <summary>
@@ -75,8 +73,8 @@ public class Dialog : MonoBehaviour
             //Debug.Log(List_diaContents[index][0]);
             _textName.text = List_diaContents[index][0]; //显示对话人物的名称
             _textContent.text = List_diaContents[index][1]; //显示对话的内容
-            //int i = int.Parse(List_diaContents[index][2]);
-            //_imageHead.sprite = IconSprites[i];//显示头像
+            int i = int.Parse(List_diaContents[index][2]);
+            _imageHead.sprite = IconSprites[i];//显示头像
             if (Input.GetKeyDown(KeyCode.T))
             {
                 Debug.Log("next"); //
