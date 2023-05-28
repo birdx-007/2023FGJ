@@ -48,7 +48,7 @@ public class AttackEffectController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerCharacter player = other.GetComponent<PlayerCharacter>();
+            Character_Player player = other.GetComponent<PlayerController>().character;
             player.PoisonousGasEffectOn();
         }
     }

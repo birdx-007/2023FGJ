@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public PropertyBarController healthBar;
     public SkillController skillTeleport;
     public SkillController skillFire;
-    Character_Player character;
+    public Character_Player character;
     private float moveHorizontal;
 
     void Start()
