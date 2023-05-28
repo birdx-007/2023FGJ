@@ -20,10 +20,10 @@ public class Dialog : MonoBehaviour
     public Text _textContent; //对话人物说的话
     public Image _imageHead;
     public Sprite[] IconSprites;//所有头像集合
-
     private bool isChat = false; //是否在对话
 
     private int index = 0; //对话内容的索引
+    
 //private Tweener tweener; //对话框进入和离开屏幕的动画
 
     private void Awake()
