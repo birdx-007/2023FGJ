@@ -8,15 +8,18 @@ using UnityEngine.UI;
 * 加速键设置
 * 
 */
-[RequireComponent(typeof(PlayerCharacter))]
+[RequireComponent(typeof(Character_Player))]
 public class PlayerController : MonoBehaviour
 {
     public PropertyBarController staminaBar;
-    PlayerCharacter character;
+    public PropertyBarController healthBar;
+    public SkillController skillTeleport;
+    Character_Player character;
+    private float moveHorizontal;
 
     void Start()
     {
-        character = GetComponent<PlayerCharacter>();
+        character = GetComponent<Character_Player>();
     }
 
     // 检测用户是否按下“Z”键以加快角色速度（如果其体力充足）
@@ -31,16 +34,26 @@ public class PlayerController : MonoBehaviour
             character.isSprinting = false;
         }
         staminaBar.SetValue(character.currentStamina/character.maxStamina);
+        healthBar.SetValue(character.currentHealth/character.maxHealth);
         if (Input.GetKeyDown(KeyCode.Space))
         {
             character.Jump();
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            skillTeleport.Use();
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            character.Teleport();
         }
     }
 
     // 处理基于物理引擎的角色运动逻辑，包括控制基础或加强模式速度以及更新剩余体力。
     void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        character.Move(moveHorizontal,character.isSprinting);
+        moveHorizontal = Input.GetAxis("Horizontal");
+        character.Move(moveHorizontal);
     }
 }
