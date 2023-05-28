@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 108164178}
   - component: {fileID: 108164177}
   m_Layer: 0
-  m_Name: Ground2
+  m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -222,8 +222,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1107272697}
   foregroundTransform: {fileID: 905985416}
+  foregroundRenderer: {fileID: 905985417}
+  backgroundRenderer: {fileID: 1546718560}
+  dirtyForeground: {fileID: 21300000, guid: f7209ee17e5836841a62d99f17c48eec, type: 3}
+  cleanForeground: {fileID: 21300000, guid: b887263eee2dd3a4d8338d74e2d21b42, type: 3}
+  dirtyBackground: {fileID: 21300000, guid: e82e1093c9c469d48a910f44d31e8fe3, type: 3}
+  cleanBackground: {fileID: 21300000, guid: 3c0d151257792f742956dd98fa755032, type: 3}
   foregroundMoveRatio: 1.5
-  transformXSum: 0
 --- !u!1 &161649368
 GameObject:
   m_ObjectHideFlags: 0
@@ -5456,7 +5461,7 @@ GameObject:
   - component: {fileID: 905985416}
   - component: {fileID: 905985417}
   m_Layer: 0
-  m_Name: fg2
+  m_Name: fg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6655,7 +6660,7 @@ GameObject:
   - component: {fileID: 1546718559}
   - component: {fileID: 1546718560}
   m_Layer: 0
-  m_Name: bg2
+  m_Name: bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
