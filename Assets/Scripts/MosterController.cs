@@ -31,6 +31,7 @@ public class MosterController : MonoBehaviour
 
     // 当前所处的阶段
     public MonsterPhase phase = MonsterPhase.Normal;
+    public float interval = 1f;
 
     void Start()
     {
@@ -43,17 +44,40 @@ public class MosterController : MonoBehaviour
 
     public void Attack()
     {
-        // if (attackCount >= 3)
-        // {
-        //     enemyShoot.ShootBullet_StraightLine();
-        //     attackCount = 0;
-        // }
-        // else
-        // {
-        //     enemyShoot.ShootBullet_Parabola();
-        //     attackCount++;
-        // }
-        enemyShoot.ShootBullet_Parabola();
+        if (
+            phase == MonsterPhase.Normal
+            || phase == MonsterPhase.IntoPhase_1
+            || phase == MonsterPhase.OutofPhase_1
+        )
+        {
+            // 从抛物线和直线中随机选择一种攻击方式
+            int random = Random.Range(0, 2);
+            if (random == 0)
+            {
+                enemyShoot.ShootBullet_Parabola(targetTrans.position - transform.position);
+            }
+            else
+            {
+                enemyShoot.ShootBullet_StraightLine();
+            }
+            interval = 1f;
+        }
+        else if (phase == MonsterPhase.Phase_1)
+        {
+            // 向下方直射子弹
+            enemyShoot.ShootBullet_Vertically_Down();
+            // 向下方随即角度散射抛物线子弹
+            // int random = Random.Range(1, 181);
+            // for (int i = 0; i < 10; i++)
+            // {
+            //     Vector2 direction = new Vector2(
+            //         Mathf.Cos(random) + direct * 0.1f,
+            //         -Mathf.Sin(random)
+            //     );
+            //     enemyShoot.ShootBullet_Parabola(direction);
+            // }
+            interval = 0.5f;
+        }
         attackCount++;
     }
 
@@ -61,7 +85,7 @@ public class MosterController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(interval);
             Attack();
         }
     }
@@ -95,7 +119,9 @@ public class MosterController : MonoBehaviour
         if (character.transform.position.y >= destHeight)
         {
             character.setVelocity(Vector2.zero);
+            // 目标图片在
             phase = MonsterPhase.Phase_1;
+            ChangeSprite(1);
         }
     }
 
@@ -112,6 +138,12 @@ public class MosterController : MonoBehaviour
         }
     }
 
+    void ChangeSprite(int idx)
+    {
+        Debug.Log("ChangeSprite");
+        character.ChangeSprite(idx);
+    }
+
     void Update()
     {
         //Debug.Log(direct);
@@ -121,6 +153,8 @@ public class MosterController : MonoBehaviour
                 VerticallyChase();
                 break;
             case MonsterPhase.Phase_1:
+                // 修改character的模型，从圆形变成方形，同时修改碰撞体积，使其能够覆盖整个
+                character.setVelocity(Vector2.zero);
                 VerticallyPatrol();
                 break;
             case MonsterPhase.Phase_2:
