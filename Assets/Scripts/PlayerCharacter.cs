@@ -142,6 +142,11 @@ public class PlayerCharacter : MonoBehaviour
             RecoverStamina(staminaRecoveryRate * Time.fixedDeltaTime);
         }
     }
+    
+    public Vector2 getVelocity()
+    {
+        return rb.velocity;
+    }
 
     public void Jump(float forceRatio = 1f)
     {
