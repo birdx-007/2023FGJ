@@ -6,18 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Scenes/TestScene.unity
-    guid: 4e13a0e6bb57aac479621ceb87b308b2
-  - enabled: 1
-    path: Assets/Scenes/UITestScene.unity
-    guid: d9c7b01872ee53349a45a511eb032712
-  - enabled: 1
     path: Assets/Scenes/BeginAnimation.unity
     guid: a6848462d977c1847bb34d0ec3b0b9bb
   - enabled: 1
     path: Assets/Scenes/Begin.unity
     guid: 8a6e9a68c9cb73c44922d42e5bb0804f
+  - enabled: 1
+    path: Assets/Scenes/OctopusScene.unity
+    guid: 70dc98f84f7497740abfbf3e1ff5b5db
+  - enabled: 1
+    path: Assets/Scenes/GoodendingAnimation.unity
+    guid: c0d02c7149d24b14fbcda034316c7270
+  - enabled: 1
+    path: Assets/Scenes/BadendingAnimation.unity
+    guid: 59467891237f2f4479ce78259661db3e
   m_configObjects: {}

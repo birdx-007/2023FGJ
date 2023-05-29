@@ -37,37 +37,46 @@ public class PlayerController : MonoBehaviour
             character.isSprinting = false;
         }
         */
-        staminaBar.SetValue(character.currentStamina/character.maxStamina);
-        healthBar.SetValue(character.currentHealth/character.maxHealth);
-        if (Input.GetKeyDown(KeyCode.Space))
+        staminaBar.SetValue(character.currentStamina / character.maxStamina);
+        healthBar.SetValue(character.currentHealth / character.maxHealth);
+        if (character.isAlive)
         {
-            character.Jump();
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                character.Jump();
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                character.Attack();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                skillTeleport.Use();
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                skillFire.Use();
+            }
+            /*
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                character.Teleport();
+            }
+            */
         }
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            character.Attack();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            skillTeleport.Use();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            skillFire.Use();
-        }
-        /*
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            character.Teleport();
-        }
-        */
     }
 
     // 处理基于物理引擎的角色运动逻辑，包括控制基础或加强模式速度以及更新剩余体力。
     void FixedUpdate()
     {
-        moveHorizontal = Input.GetAxis("Horizontal");
-        character.Move(moveHorizontal);
+        if (character.isAlive)
+        {
+            moveHorizontal = Input.GetAxis("Horizontal");
+            character.Move(moveHorizontal);
+        }
+
     }
 }

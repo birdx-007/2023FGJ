@@ -27,7 +27,7 @@ public class PauseController : MonoBehaviour
 
     public void BackToMenu()
     {
-        
+        SceneManager.LoadScene("Begin");
     }
 
     public void ShowInstruction()

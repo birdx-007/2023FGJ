@@ -253,7 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   imageObject: {fileID: 1198346630}
-  sceneToLoad: TestScene
+  sceneToLoad: OctopusScene
 --- !u!114 &635578269
 MonoBehaviour:
   m_ObjectHideFlags: 0

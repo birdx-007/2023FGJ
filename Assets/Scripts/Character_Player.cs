@@ -47,7 +47,7 @@ public class Character_Player : MonoBehaviour
     public float currentHealth;
     public float maxHealth = 100f;
     public bool isVunerable = true;
-    bool isAlive;
+    public bool isAlive;
 
     
     // debuff
@@ -64,8 +64,6 @@ public class Character_Player : MonoBehaviour
         isAlive = true;
         teleportTimer = 0;
         teleportParticle.Stop();
-        sladeLeft.gameObject.SetActive(false);
-        sladeRight.gameObject.SetActive(false);
     }
 
     // 中毒debuff
@@ -133,12 +131,12 @@ public class Character_Player : MonoBehaviour
     public void Death()
     {
         isAlive = false;
-        GetComponent<Renderer>().enabled = false;
+        renderer.enabled = false;
         rb.isKinematic = true;
 
         // 激活死亡形象
-        deathModel.SetActive(true);
-
+        //deathModel.SetActive(true);
+        Manager.instance.GoToBadEnding();
     }
 
 //
@@ -150,32 +148,24 @@ public class Character_Player : MonoBehaviour
         //攻击
         animator.SetTrigger("punch");
         attacking = true;
-        IEnumerator StopPunch()
-        {
-            yield return new WaitForSeconds(1f);
-            sladeLeft.gameObject.SetActive(false);
-            sladeRight.gameObject.SetActive(false);
-            attacking = false;
-        }
-
-        IEnumerator ReleasePunch()
-        {
-            yield return new WaitForSeconds(1f);
-            if (faceDirection > 0f)
-            {
-                sladeLeft.gameObject.SetActive(false);
-                sladeRight.gameObject.SetActive(true);
-            }
-            else
-            {
-                sladeLeft.gameObject.SetActive(true);
-                sladeRight.gameObject.SetActive(false);
-            }
-
-            StartCoroutine(StopPunch());
-        }
-
         StartCoroutine(ReleasePunch());
+    }
+    IEnumerator ReleasePunch(float time = 1f)
+    {
+        if (faceDirection > 0f)
+        {
+            sladeLeft.isValid = false;
+            sladeRight.isValid = true;
+        }
+        else
+        {
+            sladeLeft.isValid = true;
+            sladeRight.isValid = false;
+        }
+        yield return new WaitForSeconds(time);
+        sladeLeft.isValid = false;
+        sladeRight.isValid = false;
+        attacking = false;
     }
 
 // 减少当前剩余体力值，同时根据需要停止加速。
@@ -298,6 +288,7 @@ public class Character_Player : MonoBehaviour
         }
         animator.SetTrigger("teleport");
         isTeleporting = true;
+        StartCoroutine(ReleasePunch(2f));
     }
 
     public void FireBullets()
@@ -312,7 +303,9 @@ public class Character_Player : MonoBehaviour
             Vector2 direction = Vector2.up * Mathf.Sin(i * angleStep) + Vector2.right * Mathf.Cos(i * angleStep);
             // Create a bullet instance
             GameObject bullet = Instantiate(playerBulletPrefab, rb.position + Vector2.up*0.5f, Quaternion.identity);
-            bullet.GetComponent<PlayerBulletController>().SetDirection(direction);
+            var controller = bullet.GetComponent<PlayerBulletController>();
+            controller.SetDirection(direction);
+            controller.SetAngle(i*angleStep);
         }
 
         StartCoroutine(KeepInvunerable(2f));

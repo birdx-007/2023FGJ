@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerCharacter : MonoBehaviour
 {
     public GameObject deathModel;
+    public Animator animator;
+    public SpriteRenderer renderer;
 
     //速度
     public float speed = 10f;
@@ -31,11 +33,13 @@ public class PlayerCharacter : MonoBehaviour
     //生命
     public float currentHealth;
     public float maxHealth = 100f;
-    bool isAlive;
+    public bool isAlive = true;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        renderer = GetComponent<SpriteRenderer>();
         currentStamina = maxStamina;
         currentHealth = maxHealth;
         isAlive = true;
@@ -46,10 +50,16 @@ public class PlayerCharacter : MonoBehaviour
     public void TakeDamage(float amount)
     {
         Debug.Log("TakeDamage: " + amount + "");
+        animator.SetTrigger("hurt");
+        renderer.color = Color.red;
 
+        IEnumerator RecoverColor()
+        {
+            yield return new WaitForSeconds(0.2f);
+            renderer.color = Color.white;
+        }
+        StartCoroutine(RecoverColor());
         currentHealth -= amount;
-        //TO DO
-        //血量UI刷新
 
         if (currentHealth <= 0f && isAlive)
         {
@@ -61,11 +71,12 @@ public class PlayerCharacter : MonoBehaviour
     public void Death()
     {
         isAlive = false;
-        GetComponent<Renderer>().enabled = false;
         rb.isKinematic = true;
 
         // 激活死亡形象
-        deathModel.SetActive(true);
+        //deathModel.SetActive(true);
+        animator.SetTrigger("die");
+        Manager.instance.GoToGoodEnding();
     }
 
     //

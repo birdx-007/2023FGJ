@@ -5,12 +5,19 @@ using UnityEngine;
 
 public class PlayerSladeController : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    public bool isValid;
+
+    private void OnTriggerStay2D(Collider2D other)
     {
+        if (!isValid)
+        {
+            return;
+        }
         PlayerCharacter enemy = other.GetComponent<PlayerCharacter>();
         if (enemy != null)
         {
-            enemy.TakeDamage(1f);
+            enemy.TakeDamage(10f);
+            isValid = false;
         }
     }
 }

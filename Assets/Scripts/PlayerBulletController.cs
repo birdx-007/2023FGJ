@@ -38,7 +38,13 @@ public class PlayerBulletController : MonoBehaviour
             Vector3 targetPosition = targetTrans.position;
             Vector2 delta = new Vector2(targetPosition.x - position.x, targetPosition.y - position.y);
             rb.velocity = delta.normalized * trackSpeed;
+            rb.rotation = Mathf.Atan2(delta.y,delta.x) / Mathf.PI * 180f;
         }
+    }
+
+    public void SetAngle(float angleRad)
+    {
+        rb.rotation = angleRad / Mathf.PI * 180f;
     }
 
     public void SetDirection(Vector2 direction)
@@ -50,7 +56,7 @@ public class PlayerBulletController : MonoBehaviour
         PlayerCharacter enemy = other.GetComponent<PlayerCharacter>();
         if (enemy != null)
         {
-            enemy.TakeDamage(1f);
+            enemy.TakeDamage(5f);
             Destroy(gameObject);
         }
     }

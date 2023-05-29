@@ -10,10 +10,12 @@ public class SkillController : MonoBehaviour
     private PlayerSkill skill;
     public Image CDFillImage;
     private Button skillButton;
+    private AudioSource sfx;
     private void Awake()
     {
         skill = GetComponent<PlayerSkill>();
         skillButton = GetComponent<Button>();
+        sfx = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -30,5 +32,10 @@ public class SkillController : MonoBehaviour
         }
         skill.ResetCD();
         skill.OnSkillUsed.Invoke();
+    }
+
+    public void SFXPlay()
+    {
+        sfx.Play();
     }
 }

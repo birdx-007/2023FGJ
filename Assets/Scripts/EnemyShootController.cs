@@ -57,7 +57,11 @@ class EnemyShootController : MonoBehaviour
 
         // 设置子弹类型
         BulletController bulletController = bullet.GetComponent<BulletController>();
-        bulletController.bulletType = BulletType.Parabola;
+        if (bulletController != null)
+        {
+            bulletController.bulletType = BulletType.Parabola;
+        }
+        
     }
 
     /// Shoots a bullet horizontally
