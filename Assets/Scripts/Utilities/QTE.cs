@@ -33,6 +33,7 @@ public class QTE : MonoBehaviour
     {
         qteTimer = inputDetectionWindow;
         qteUI.enabled = false;
+        qteUI.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -78,9 +79,10 @@ public class QTE : MonoBehaviour
         qteTimer = inputDetectionWindow;
 
         // Display QTE prompt
+        qteUI.gameObject.SetActive(true);
         qteUI.enabled = true;
         qteUI.ResetUI();
-        qteUI.DisplayQTEPrompt(qteInputs[currentQTEIndex].prompt);
+        //qteUI.DisplayQTEPrompt(qteInputs[currentQTEIndex].prompt);
     }
 
     private void QTESuccessful()
@@ -96,7 +98,7 @@ public class QTE : MonoBehaviour
         else
         {
             // Display next QTE prompt
-            qteUI.DisplayQTEPrompt(qteInputs[currentQTEIndex].prompt);
+            //qteUI.DisplayQTEPrompt(qteInputs[currentQTEIndex].prompt);
             qteTimer = inputDetectionWindow;
         }
     }

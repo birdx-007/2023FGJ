@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PauseController : MonoBehaviour
 {
     public Animator pauseMenuAnimator;
+    public Animator instructionMenuAnimator;
 
     public void Pause()
     {
@@ -27,6 +28,21 @@ public class PauseController : MonoBehaviour
     public void BackToMenu()
     {
         
+    }
+
+    public void ShowInstruction()
+    {
+        instructionMenuAnimator.SetBool("isPausing", true);
+    }
+
+    public void HideInstruction()
+    {
+        instructionMenuAnimator.SetBool("isPausing", false);
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
     }
     public void ShowPauseMenu()
     {

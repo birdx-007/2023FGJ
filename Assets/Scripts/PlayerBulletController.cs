@@ -47,9 +47,10 @@ public class PlayerBulletController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Enemy"))
+        PlayerCharacter enemy = other.GetComponent<PlayerCharacter>();
+        if (enemy != null)
         {
-            MosterController enemy = other.GetComponent<MosterController>();
+            enemy.TakeDamage(1f);
             Destroy(gameObject);
         }
     }

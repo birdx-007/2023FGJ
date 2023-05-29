@@ -400,7 +400,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1326406803593487384, guid: 792a7641b2450244fbff63d0a1307cf0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1326406803593487385, guid: 792a7641b2450244fbff63d0a1307cf0, type: 3}
       propertyPath: m_Pivot.x
@@ -582,6 +582,10 @@ PrefabInstance:
     - target: {fileID: 6879260072332508998, guid: e1812043c1fa3d44eaabb020e472ea83, type: 3}
       propertyPath: m_Name
       value: MainMenuUISystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 6879260072332508998, guid: e1812043c1fa3d44eaabb020e472ea83, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1812043c1fa3d44eaabb020e472ea83, type: 3}

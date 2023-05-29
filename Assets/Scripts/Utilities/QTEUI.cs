@@ -13,7 +13,7 @@ public class QTEUI : MonoBehaviour
     public void ResetUI()
     {
         promptText.text = "";
-        feedbackImage.color = Color.red;
+        feedbackImage.color = Color.white;
     }
 
     public void UpdateQTEFillImage(float ratio)
@@ -31,5 +31,14 @@ public class QTEUI : MonoBehaviour
     {
         // Display visual feedback based on QTE success
         feedbackImage.color = success ? Color.green : Color.red;
+
+        IEnumerator WaitAndHide(float time)
+        {
+            yield return new WaitForSeconds(time);
+            feedbackImage.color = Color.white;
+            gameObject.SetActive(false);
+        }
+
+        StartCoroutine(WaitAndHide(0.5f));
     }
 }

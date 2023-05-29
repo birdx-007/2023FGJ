@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public enum BulletType
+public enum BulletTrack
 {
     StraightLine,
     Parabola,
@@ -14,7 +15,8 @@ public enum BulletType
 public class BulletController : MonoBehaviour
 {
     private Rigidbody2D rb;
-    public BulletType bulletType;
+    public BulletTrack bulletTrack;
+    public BulletType bulletType;  
     public float speed = 2f;
     public float turnSpeed = 2f;
     public Vector2 direction = Vector2.zero;
@@ -32,7 +34,7 @@ public class BulletController : MonoBehaviour
 
     public void SetOnBulletEffect(Vector2 position)
     {
-        if (bulletType == BulletType.Vertical)
+        if (bulletType == BulletType.Poison)
         {
             GameObject effect = Instantiate(attackEffectPrefab, transform.position, Quaternion.identity);
             attackEffectRb = effect.GetComponent<Rigidbody2D>();
@@ -81,7 +83,7 @@ public class BulletController : MonoBehaviour
 
     private void Update()
     {
-        if (bulletType == BulletType.Spiral)
+        if (bulletTrack == BulletTrack.Spiral)
         {
             StartCoroutine(SpiralBullet(rb));
         }
