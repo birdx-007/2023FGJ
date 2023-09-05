@@ -18,7 +18,7 @@ public class TagChangeScene : MonoBehaviour
             {
                 if (hit.collider.CompareTag(triggerTag))  // 判断标签名称是否匹配
                 {
-                    SceneManager.LoadScene(sceneName);  // 切换场景
+                    SceneManager.LoadSceneAsync(sceneName);  // 切换场景
                 }
             }
         }

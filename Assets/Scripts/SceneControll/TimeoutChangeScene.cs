@@ -8,7 +8,6 @@ public class TimeoutChangeScene : MonoBehaviour
 {
     public string nextScene;
 
-
     // 跳转延迟的秒数
     public float delay = 10f;
 
@@ -22,6 +21,6 @@ public class TimeoutChangeScene : MonoBehaviour
     {
         // 等待一段时间之后跳转到下一个场景
         yield return new WaitForSeconds(delay);
-        SceneManager.LoadScene(nextScene);
+        SceneManager.LoadSceneAsync(nextScene);
 
 }}
